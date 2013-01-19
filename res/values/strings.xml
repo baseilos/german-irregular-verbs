@@ -1,5 +1,7 @@
 <resources>
 
     <string name="app_name">German Irregular Verbs</string>
+    <string name="nextbtn_label">Next</string>
+    <string name="skipbtn_label">Skip</string>
 
 </resources>
