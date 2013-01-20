@@ -13,7 +13,12 @@ UNCOMMENT TO ENABLE GOOGLE MAPS
  	<uses-library android:name="com.google.android.maps"
 		android:required="true"></uses-library>
 -->
-		<activity android:label="@string/app_name" android:name="EntryPointActivity"></activity>
+		<activity android:label="@string/app_name" android:name="EntryPointActivity">
+		    <intent-filter>
+			    <action android:name="android.intent.action.MAIN" />
+			    <category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
 	</application>
 
 <!-- 
@@ -29,9 +34,4 @@ PERMISSION REQUIRED FOR GOOGLE MAPS
 	<uses-permission android:name="android.permission.INTERNET" />
  -->
 	<uses-sdk android:minSdkVersion="1" />
-	
-	<intent-filter>
-	    <action android:name="android.intent.action.MAIN" />
-	    <category android:name="android.intent.category.LAUNCHER" />
-	</intent-filter>
 </manifest>
