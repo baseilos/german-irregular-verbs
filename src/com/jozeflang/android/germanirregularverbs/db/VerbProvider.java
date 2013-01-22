@@ -1,9 +1,10 @@
 package com.jozeflang.android.germanirregularverbs.db;
 
 
-import com.jozeflang.android.germanirregularverbs.main.Utils;
-
 import android.content.Context;
+
+import com.jozeflang.android.germanirregularverbs.util.Utils;
+import com.jozeflang.android.germanirregularverbs.validator.AnswerType;
 
 /** 
  * A word provider.
@@ -33,7 +34,7 @@ public class VerbProvider {
 	 */
 	public VerbDTO getNextVerb() {
 		String[] verb = VerbDatabase.INSTANCE.getVerb(getNextVerbId());
-		return VerbDTO.of(verb[0], verb[1], verb[2]);
+		return VerbDTO.of(verb[0], verb[1], verb[2], verb[3], getNextAnswerType());
 	}
 	
 	/**
@@ -47,6 +48,11 @@ public class VerbProvider {
 	
 	private int getNextVerbId() {
 		return Utils.getRandom(1, Utils.longToInt(getVerbCount()));
+	}
+	
+	private AnswerType getNextAnswerType() {
+		int answerId = Utils.getRandom(0, AnswerType.values().length - 1);
+		return AnswerType.values()[answerId];
 	}
 	
 }

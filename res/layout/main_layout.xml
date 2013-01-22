@@ -9,7 +9,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textSize="13sp" 
+        android:textSize="39sp" 
+		android:textStyle="bold" />
+    
+    <TextView
+        android:id="@+id/answerTypeTW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="26sp" 
 		android:textStyle="bold" />
     
     <EditText

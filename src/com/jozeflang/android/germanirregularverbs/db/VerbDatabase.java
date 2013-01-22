@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * <pre>
  * create table german (
  * 	id int primary key autoincrement,
+ *  translation varchar(100) not null,
  *  present varchar(100) not null,
  *  perfect varchar(100) not null,
  *  preterite varchar(100) not null
@@ -26,16 +27,18 @@ enum VerbDatabase {
     INSTANCE;
  
     public final String COLUMN_ID = "id";
+    public final String COLUMN_TRANSLATION = "translation";
     public final String COLUMN_PRESENT = "present";
     public final String COLUMN_PERFECT= "perfect";
     public final String COLUMN_PRETERITE = "preterite";
     
     private final String DATABASE_NAME = "words";
-    private final int DATABASE_VERSION = 2;
+    private final int DATABASE_VERSION = 1;
 	private final String TABLE_NAME = "german";
 	private final String TABLE_CREATE_SCRIPT =
 			"create table " + TABLE_NAME + " ( "
 			+ COLUMN_ID + " integer primary key autoincrement, "
+			+ COLUMN_TRANSLATION + " varchar(100) not null,"
 			+ COLUMN_PRESENT + " varchar(100) not null,"
 			+ COLUMN_PERFECT + " varchar(100) not null,"
 			+ COLUMN_PRETERITE + " varchar(100) not null"
@@ -80,19 +83,21 @@ enum VerbDatabase {
 	 * @param id
 	 * @return An array of strings in following pattern:
 	 * 	<li>
+	 * 		<ol>Translation</ol>
 	 * 		<ol>Present</ol>
 	 * 		<ol>Perfect</ol>
 	 * 		<ol>Preterite</ol>
 	 *  </li>
 	 */
 	public String[] getVerb(final int id) {
-		String[] verb = new String[3];
+		String[] verb = new String[4];
 		
-		Cursor c = getHandler().query(TABLE_NAME, new String[] {COLUMN_PRESENT, COLUMN_PERFECT, COLUMN_PRETERITE}, COLUMN_ID + " = ?", new String[] {String.valueOf(id)}, null, null, null);
+		Cursor c = getHandler().query(TABLE_NAME, new String[] {COLUMN_TRANSLATION, COLUMN_PRESENT, COLUMN_PERFECT, COLUMN_PRETERITE}, COLUMN_ID + " = ?", new String[] {String.valueOf(id)}, null, null, null);
 		c.moveToFirst();
 		verb[0] = c.getString(0);
 		verb[1] = c.getString(1);
 		verb[2] = c.getString(2);
+		verb[3] = c.getString(3);
 				
 		return verb;
 	}
@@ -122,6 +127,7 @@ enum VerbDatabase {
 		@Override
 		public void onCreate(SQLiteDatabase db) {
 			db.execSQL(TABLE_CREATE_SCRIPT);
+			db.execSQL("INSERT INTO " + TABLE_NAME + "(" + COLUMN_TRANSLATION + "," + COLUMN_PRESENT + "," + COLUMN_PERFECT + "," + COLUMN_PRETERITE + ") VALUES ('to go', 'gehen', 'gegangen', 'ging')");
 		}
 
 		@Override

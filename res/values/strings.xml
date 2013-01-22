@@ -3,5 +3,9 @@
     <string name="app_name">German Irregular Verbs</string>
     <string name="nextbtn_label">Next</string>
     <string name="skipbtn_label">Skip</string>
+    <string name="incorrect_answer">Incorrect answer</string>
+    <string name="answerType_present">Present</string>
+    <string name="answerType_perfect">Perfect</string>
+    <string name="answerType_preterite">Preterite</string>
 
 </resources>

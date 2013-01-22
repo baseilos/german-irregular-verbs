@@ -1,4 +1,4 @@
-package com.jozeflang.android.germanirregularverbs.main;
+package com.jozeflang.android.germanirregularverbs.util;
 
 import java.util.Random;
 
@@ -30,8 +30,8 @@ public class Utils {
 	 * @return
 	 */
 	public static int getRandom(final Random rg, int from, int to) {
-		int randomInt = rg.nextInt(to-from) + from;
-		return randomInt;
+		int randomInt = rg.nextInt(to-from+1);
+		return randomInt + from;
 	}
 	
 	/**
