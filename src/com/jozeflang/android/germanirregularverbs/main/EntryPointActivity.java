@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.db.VerbProvider;
+import com.jozeflang.android.germanirregularverbs.validator.AnswerType;
 import com.jozeflang.android.germanirregularverbs.validator.AnswerValidator;
 
 /** 
@@ -20,7 +21,7 @@ import com.jozeflang.android.germanirregularverbs.validator.AnswerValidator;
 public class EntryPointActivity extends Activity {
 	
 	private VerbProvider verbProvider;
-	private VerbDTO activeVerb;
+	private Question activeQuestion = new Question();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +30,12 @@ public class EntryPointActivity extends Activity {
 		initScreenElements(savedInstanceState);
 		
 		verbProvider = new VerbProvider(getApplicationContext());
-		displayNewVerb();
+		displayNewQuestion();
 	}
 	
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
+	protected void onStop() {
+		super.onStop();
 		verbProvider.closeProvider();
 	}
 
@@ -51,11 +52,10 @@ public class EntryPointActivity extends Activity {
 		nextBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String answer = ((TextView) findViewById(R.id.inputTE)).getText().toString();
-				if (!AnswerValidator.validate(activeVerb, answer, activeVerb.getAnswerType())) {
+				if (!AnswerValidator.validate(activeQuestion.verb, getAnswer(), activeQuestion.answerType)) {
 					Toast.makeText(getApplicationContext(), R.string.incorrect_answer, Toast.LENGTH_SHORT).show();
 				} else {
-					displayNewVerb();
+					displayNewQuestion();
 				}
 			}
 		});
@@ -63,26 +63,56 @@ public class EntryPointActivity extends Activity {
 		skipBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				displayNewVerb();
+				displayNewQuestion();
 			}
 		});
 	}
 	
-	private void displayNewVerb() {
-		activeVerb = verbProvider.getNextVerb();
-		displayVerb(activeVerb);
+	private void displayNewQuestion() {
+		activeQuestion.verb = verbProvider.getNextVerb();
+		activeQuestion.answerType = verbProvider.getAnswerType();
+		displayQuestion(activeQuestion);
 	}
 	
-	private void displayVerb(VerbDTO verb) {
+	private void displayQuestion(Question question) {
 		TextView display = (TextView) findViewById(R.id.displayTW);
 		TextView answerType = (TextView) findViewById(R.id.answerTypeTW);
-		EditText input = (EditText) findViewById(R.id.inputTE);
+		display.setText(question.verb.getPresent());
+		answerType.setText(question.answerType.getStringId());
 		
-		// Display present 
-		display.setText(verb.getPresent());
-		answerType.setText(verb.getAnswerType().getStringId());
-		// Clear edit
-		input.setText("");
+		switch (question.answerType) {
+			case PERFECT:
+				 // Hide/show layout for a perfect question
+				 findViewById(R.id.perfectLayout).setVisibility(View.VISIBLE);
+				 findViewById(R.id.preteriteInputTE).setVisibility(View.GONE);
+				 ((EditText) findViewById(R.id.perfectAuxVerbInputTE)).setText("");
+				 ((EditText) findViewById(R.id.perfectInputTE)).setText("");
+				break;
+			case PRETERITE:
+				// Hide/show layout for a perfect question
+				findViewById(R.id.perfectLayout).setVisibility(View.GONE);
+				 findViewById(R.id.preteriteInputTE).setVisibility(View.VISIBLE);
+				((EditText) findViewById(R.id.preteriteInputTE)).setText("");
+				break;
+		}
+		
+	}
+	
+	private Answer getAnswer() {
+		switch (activeQuestion.answerType) {
+			case PERFECT:
+				return new Answer(((EditText) findViewById(R.id.perfectAuxVerbInputTE)).getText().toString(), ((EditText) findViewById(R.id.perfectInputTE)).getText().toString());
+			case PRETERITE:
+				return new Answer(null, ((EditText) findViewById(R.id.preteriteInputTE)).getText().toString());
+		}
+		return new Answer(null, null);
+	}
+	
+	
+	private class Question {
+		private AnswerType answerType;
+		private VerbDTO verb;
+		
 	}
 
 }

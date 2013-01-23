@@ -1,49 +1,120 @@
 package com.jozeflang.android.germanirregularverbs.db;
 
-import com.jozeflang.android.germanirregularverbs.validator.AnswerType;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 /** 
  * A word data transfer object (DTO object).
  * @author Jozef Lang (developer@jozeflang.com)
  */
 public class VerbDTO {
+	 
+	private final int id;
+	private final String present;
+	private final Collection<Translation> translations;
+	private final Collection<Perfect> perfects;
+	private final Collection<Preterite> preterites;
 	
-	 private final String translation;
-	 private final String present;
-	 private final String perfect;
-	 private final String preterite;
-	 private final AnswerType answerType;
-	 
-	 private VerbDTO(String translation, String present, String perfect, String preterite, AnswerType answerType) {
-		 this.translation = translation;
-		 this.present = present;
-		 this.perfect = perfect;
-		 this.preterite = preterite;
-		 this.answerType = answerType;
-	 }
-	 
-	 public String getTranslation() {
-		 return translation;
-	 }
-	 
-	 public String getPresent() {
+	private VerbDTO(int id, String present) {
+		this.id = id;
+		this.present = present;
+		translations = new ArrayList<Translation>();
+		perfects = new ArrayList<Perfect>();
+		preterites = new ArrayList<Preterite>();
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public String getPresent() {
 		return present;
 	}
-
-	public String getPerfect() {
-		return perfect;
-	}
-
-	public String getPreterite() {
-		return preterite;
+	
+	public void addTranslation(String translation) {
+		translations.add(new Translation(translation));
 	}
 	
-	public AnswerType getAnswerType() {
-		return answerType;
+	public Collection<Translation> getTranslations() {
+		return Collections.unmodifiableCollection(translations);
+	}
+	
+	public void addPerfect(String auxVerb, String perfect) {
+		perfects.add(new Perfect(auxVerb, perfect));
+	}
+	
+	public Collection<Perfect> getPerfects() {
+		return Collections.unmodifiableCollection(perfects);
+	}
+	
+	public void addPreterite(String preterite) {
+		preterites.add(new Preterite(preterite));
+	}
+	
+	public Collection<Preterite> getPreterites() {
+		return Collections.unmodifiableCollection(preterites);
+	}
+	
+	static VerbDTO of(int id, String present) {
+		 return new VerbDTO(id, present);
+	 }
+	
+	/**
+	 * @author Jozef Lang (developer@jozeflang.com)
+	 */
+	public class Translation {
+		
+		private final String translation;
+		
+		private Translation(String translation) {
+			this.translation = translation;
+		}
+		
+		public String getTranslation() {
+			return translation;
+		}
+		
+	}
+	
+	/**
+	 * @author Jozef Lang (developer@jozeflang.com)
+	 */
+	public class Preterite {
+		
+		private final String preterite;
+		
+		private Preterite(String preterite) {
+			this.preterite = preterite;
+		}
+		
+		public String getPreterite() {
+			return preterite;
+		}
+		
 	}
 
-	static VerbDTO of(String translation, String present, String perfect, String preterite, AnswerType answerType) {
-		 return new VerbDTO(translation, present, perfect, preterite, answerType);
-	 }
+	/**
+	 * @author Jozef Lang (developer@jozeflang.com)
+	 */
+	public class Perfect {
+	
+		private final String auxVerb;
+		private final String perfect;
+		
+		private Perfect(String auxVerb, String perfect) {
+			this.auxVerb = auxVerb;
+			this.perfect = perfect;
+		}
+		
+		public String getAuxVerb() {
+			return auxVerb;
+		}
+		
+		public String getPerfect() {
+			return perfect;
+		}
+		
+	}
 	
 }

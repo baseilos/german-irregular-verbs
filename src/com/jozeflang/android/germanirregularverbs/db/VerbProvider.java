@@ -33,8 +33,7 @@ public class VerbProvider {
 	 * @return
 	 */
 	public VerbDTO getNextVerb() {
-		String[] verb = VerbDatabase.INSTANCE.getVerb(getNextVerbId());
-		return VerbDTO.of(verb[0], verb[1], verb[2], verb[3], getNextAnswerType());
+		return VerbDatabase.INSTANCE.getVerb(getNextVerbId());
 	}
 	
 	/**
@@ -45,14 +44,13 @@ public class VerbProvider {
 		return VerbDatabase.INSTANCE.getVerbCount();
 	}
 	
+	public AnswerType getAnswerType() {
+		int answerId = Utils.getRandom(0, AnswerType.values().length - 1);
+		return AnswerType.values()[answerId];
+	}
 	
 	private int getNextVerbId() {
 		return Utils.getRandom(1, Utils.longToInt(getVerbCount()));
-	}
-	
-	private AnswerType getNextAnswerType() {
-		int answerId = Utils.getRandom(0, AnswerType.values().length - 1);
-		return AnswerType.values()[answerId];
 	}
 	
 }

@@ -1,6 +1,7 @@
 package com.jozeflang.android.germanirregularverbs.validator;
 
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
+import com.jozeflang.android.germanirregularverbs.main.Answer;
 
 /** 
  * Answer validator
@@ -12,7 +13,7 @@ public class AnswerValidator {
 		
 	}
 	
-	public static boolean validate(VerbDTO verb, final String answer, AnswerType answerType) {
+	public static boolean validate(VerbDTO verb, final Answer answer, AnswerType answerType) {
 		switch (answerType) {
 		case PERFECT:
 			return validatePerfect(verb, answer);
@@ -23,12 +24,20 @@ public class AnswerValidator {
 		}
 	}
 	
-	private static boolean validatePerfect(VerbDTO verb, final String answer) {
-		return verb.getPerfect().equalsIgnoreCase(answer);
+	private static boolean validatePerfect(VerbDTO verb, final Answer answer) {
+		for (VerbDTO.Perfect p : verb.getPerfects()) {
+			if (p.getAuxVerb().equalsIgnoreCase(answer.getAuxVerb()) && p.getPerfect().equalsIgnoreCase(answer.getVerb()))
+				return true;
+		}
+		return false;
 	}
 	
-	private static boolean validatePreterite(VerbDTO verb, final String answer) {
-		return verb.getPreterite().equalsIgnoreCase(answer);
+	private static boolean validatePreterite(VerbDTO verb, final Answer answer) {
+		for (VerbDTO.Preterite p : verb.getPreterites()) {
+			if (p.getPreterite().equalsIgnoreCase(answer.getVerb()))
+				return true;
+		}
+		return false;
 	}
 	
 }
