@@ -7,5 +7,6 @@
     <string name="answerType_present">Present</string>
     <string name="answerType_perfect">Perfect</string>
     <string name="answerType_preterite">Preterite</string>
+    <string name="helpbtn_label">Help</string>
 
 </resources>

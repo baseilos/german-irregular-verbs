@@ -81,7 +81,10 @@ enum VerbDatabase {
 	private VerbDTO getVerbFromDb(final int id) {
 		Cursor c = getHandler().query(VerbTable.TABLE_NAME, new String[] {VerbTable.COLUMN_ID, VerbTable.COLUMN_PRESENT}, VerbTable.COLUMN_ID + " = ?", new String[] {String.valueOf(id)}, null, null, null);
 		c.moveToFirst();
-		return VerbDTO.of(c.getInt(0), c.getString(1));
+		int verbId = c.getInt(0);
+		String verbPresent = c.getString(1);
+		c.close();
+		return VerbDTO.of(verbId, verbPresent);
 	}
 	
 	/**
@@ -96,6 +99,7 @@ enum VerbDatabase {
 			verb.addTranslation(c.getString(0));
 			c.moveToNext();
 		}
+		c.close();
 		return verb;
 	}
 	
@@ -111,6 +115,7 @@ enum VerbDatabase {
 			verb.addPerfect(c.getString(0), c.getString(1));
 			c.moveToNext();
 		}
+		c.close();
 		return verb;
 	}
 	
@@ -126,6 +131,7 @@ enum VerbDatabase {
 			verb.addPreterite(c.getString(0));
 			c.moveToNext();
 		}
+		c.close();
 		return verb;
 	}
 	

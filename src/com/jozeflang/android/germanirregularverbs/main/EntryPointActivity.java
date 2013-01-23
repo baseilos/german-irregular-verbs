@@ -7,7 +7,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.db.VerbProvider;
@@ -22,6 +21,10 @@ public class EntryPointActivity extends Activity {
 	
 	private VerbProvider verbProvider;
 	private Question activeQuestion = new Question();
+	
+	private EditText perfectAuxTE;
+	private EditText perfectInputTE;
+	private EditText preteriteInputTE;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,9 @@ public class EntryPointActivity extends Activity {
 
 
 	private void initScreenElements(Bundle savedInstanceState) {
+		perfectAuxTE = ((EditText) findViewById(R.id.perfectAuxVerbInputTE));
+		perfectInputTE = ((EditText) findViewById(R.id.perfectInputTE));
+		preteriteInputTE = ((EditText) findViewById(R.id.preteriteInputTE));
 		initButtonsCallback(savedInstanceState);
 	}
 	
@@ -53,7 +59,14 @@ public class EntryPointActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				if (!AnswerValidator.validate(activeQuestion.verb, getAnswer(), activeQuestion.answerType)) {
-					Toast.makeText(getApplicationContext(), R.string.incorrect_answer, Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getApplicationContext(), R.string.incorrect_answer, Toast.LENGTH_SHORT).show();
+					if (perfectAuxTE.hasFocus()) {
+						perfectAuxTE.setError(getString(R.string.incorrect_answer));
+					} else if (perfectInputTE.hasFocus()) {
+						perfectInputTE.setError(getString(R.string.incorrect_answer));
+					} else {
+						preteriteInputTE.setError(getString(R.string.incorrect_answer));
+					}
 				} else {
 					displayNewQuestion();
 				}
@@ -85,25 +98,30 @@ public class EntryPointActivity extends Activity {
 				 // Hide/show layout for a perfect question
 				 findViewById(R.id.perfectLayout).setVisibility(View.VISIBLE);
 				 findViewById(R.id.preteriteInputTE).setVisibility(View.GONE);
-				 ((EditText) findViewById(R.id.perfectAuxVerbInputTE)).setText("");
-				 ((EditText) findViewById(R.id.perfectInputTE)).setText("");
+				 perfectAuxTE.setText("");
+				 perfectInputTE.setText("");
 				break;
 			case PRETERITE:
 				// Hide/show layout for a perfect question
 				findViewById(R.id.perfectLayout).setVisibility(View.GONE);
-				 findViewById(R.id.preteriteInputTE).setVisibility(View.VISIBLE);
-				((EditText) findViewById(R.id.preteriteInputTE)).setText("");
+				findViewById(R.id.preteriteInputTE).setVisibility(View.VISIBLE);
+				preteriteInputTE.setText("");
 				break;
 		}
+		
+		// Hide errors
+		perfectAuxTE.setError(null);
+		perfectInputTE.setError(null);
+		preteriteInputTE.setError(null);
 		
 	}
 	
 	private Answer getAnswer() {
 		switch (activeQuestion.answerType) {
 			case PERFECT:
-				return new Answer(((EditText) findViewById(R.id.perfectAuxVerbInputTE)).getText().toString(), ((EditText) findViewById(R.id.perfectInputTE)).getText().toString());
+				return new Answer(perfectAuxTE.getText().toString(), perfectInputTE.getText().toString());
 			case PRETERITE:
-				return new Answer(null, ((EditText) findViewById(R.id.preteriteInputTE)).getText().toString());
+				return new Answer(null, preteriteInputTE.getText().toString());
 		}
 		return new Answer(null, null);
 	}
