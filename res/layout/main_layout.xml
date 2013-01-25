@@ -55,22 +55,25 @@
         
         <Button
             android:id="@+id/nextBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0sp"
+            android:layout_height="wrap_content" 
+            android:layout_weight="1"
             android:text="@string/nextbtn_label" 
             android:layout_gravity="center_horizontal" />
         
         <Button 
             android:id="@+id/skipBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" 
             android:text="@string/skipbtn_label" 
             android:layout_gravity="center_horizontal" />
         
         <Button 
             android:id="@+id/helpBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" 
             android:text="@string/helpbtn_label" 
             android:layout_gravity="center_horizontal" />
         

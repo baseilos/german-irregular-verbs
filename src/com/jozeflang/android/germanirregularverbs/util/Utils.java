@@ -1,5 +1,9 @@
 package com.jozeflang.android.germanirregularverbs.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 
@@ -46,4 +50,23 @@ public class Utils {
 		return (int) lvalue;
 	}
 	
+	/**
+	 * Reads a text file from {@link InputStream} using {@link BufferedReader#readLine()} method <br />
+	 * If an exception occurs, a so far read content is returned 
+	 * @param in
+	 * @return
+	 */
+	public static String readTextFile(InputStream in) {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		StringBuffer sb = new StringBuffer();
+		String line;
+		try {
+			while ((line = reader.readLine()) != null) {
+				sb.append(line);
+			}
+		} catch (IOException e) {
+			return sb.toString();
+		}
+		return sb.toString();
+	}
 }

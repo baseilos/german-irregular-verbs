@@ -8,5 +8,8 @@
     <string name="answerType_perfect">Perfect</string>
     <string name="answerType_preterite">Preterite</string>
     <string name="helpbtn_label">Help</string>
+    <string name="mainmenu_about_label">About</string>
+    <string name="about_closeBtn_label">Close</string>
+    <string name="about_header">About</string>
 
 </resources>
