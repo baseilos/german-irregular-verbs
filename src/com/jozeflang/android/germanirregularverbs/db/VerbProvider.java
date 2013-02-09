@@ -3,6 +3,7 @@ package com.jozeflang.android.germanirregularverbs.db;
 
 import android.content.Context;
 
+import com.jozeflang.android.germanirregularverbs.main.Question;
 import com.jozeflang.android.germanirregularverbs.util.Utils;
 import com.jozeflang.android.germanirregularverbs.validator.AnswerType;
 
@@ -36,17 +37,27 @@ public class VerbProvider {
 		return VerbDatabase.INSTANCE.getVerb(getNextVerbId());
 	}
 	
+	public AnswerType getAnswerType() {
+		int answerId = Utils.getRandom(0, AnswerType.values().length - 1);
+		return AnswerType.values()[answerId];
+	}
+	
+	/**
+	 * A convenient method for generating new question<br />
+	 * Method calls {@link VerbProvider#getAnswerType()} and {@link VerbProvider#getNextVerb()} 
+	 * and constructs new Question object from retrieved values. 
+	 * @return
+	 */
+	public Question getQuestion() {
+		return new Question(getAnswerType(), getNextVerb());
+	}
+	
 	/**
 	 * Returns verb count
 	 * @return
 	 */
 	public long getVerbCount() {
 		return VerbDatabase.INSTANCE.getVerbCount();
-	}
-	
-	public AnswerType getAnswerType() {
-		int answerId = Utils.getRandom(0, AnswerType.values().length - 1);
-		return AnswerType.values()[answerId];
 	}
 	
 	private int getNextVerbId() {

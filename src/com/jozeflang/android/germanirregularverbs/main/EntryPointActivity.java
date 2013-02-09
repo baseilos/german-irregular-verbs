@@ -12,10 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO.Perfect;
-import com.jozeflang.android.germanirregularverbs.db.VerbProvider;
-import com.jozeflang.android.germanirregularverbs.validator.AnswerType;
 import com.jozeflang.android.germanirregularverbs.validator.AnswerValidator;
 
 /** 
@@ -24,8 +21,7 @@ import com.jozeflang.android.germanirregularverbs.validator.AnswerValidator;
  */
 public class EntryPointActivity extends Activity {
 	
-	private VerbProvider verbProvider;
-	private Question activeQuestion = new Question();
+	private GermanIrregularVerbsApplication application;
 	
 	private EditText perfectAuxTE;
 	private EditText perfectInputTE;
@@ -34,17 +30,14 @@ public class EntryPointActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		application = ((GermanIrregularVerbsApplication) getApplication());
+		
+		// Initialize UI components
 		setContentView(R.layout.main_layout);
 		initScreenElements(savedInstanceState);
 		
-		verbProvider = new VerbProvider(this);
-		displayNewQuestion();
-	}
-	
-	@Override
-	protected void onStop() {
-		super.onStop();
-		verbProvider.closeProvider();
+		// Display currently active question
+		displayQuestion(application.getQuestion());
 	}
 
 	@Override
@@ -87,7 +80,8 @@ public class EntryPointActivity extends Activity {
 		nextBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (!AnswerValidator.validate(activeQuestion.verb, getAnswer(), activeQuestion.answerType)) {
+				Question activeQuestion = application.getQuestion();
+				if (!AnswerValidator.validate(activeQuestion.getVerb(), getAnswer(activeQuestion), activeQuestion.getAnswerType())) {
 					if (perfectAuxTE.hasFocus()) {
 						perfectAuxTE.setError(getString(R.string.incorrect_answer));
 					} else if (perfectInputTE.hasFocus()) {
@@ -113,25 +107,23 @@ public class EntryPointActivity extends Activity {
 		helpBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				displayCorrectAnswer(activeQuestion);
+				displayCorrectAnswer(application.getQuestion());
 			}
 		});
 		
 	}
 	
 	private void displayNewQuestion() {
-		activeQuestion.verb = verbProvider.getNextVerb();
-		activeQuestion.answerType = verbProvider.getAnswerType();
-		displayQuestion(activeQuestion);
+		displayQuestion(application.getQuestion(true));
 	}
 	
 	private void displayQuestion(Question question) {
 		TextView display = (TextView) findViewById(R.id.displayTW);
 		TextView answerType = (TextView) findViewById(R.id.answerTypeTW);
-		display.setText(question.verb.getPresent());
-		answerType.setText(question.answerType.getStringId());
+		display.setText(question.getVerb().getPresent());
+		answerType.setText(question.getAnswerType().getStringId());
 		
-		switch (question.answerType) {
+		switch (question.getAnswerType()) {
 			case PERFECT:
 				 // Hide/show layout for a perfect question
 				 findViewById(R.id.perfectLayout).setVisibility(View.VISIBLE);
@@ -154,8 +146,8 @@ public class EntryPointActivity extends Activity {
 		
 	}
 	
-	private Answer getAnswer() {
-		switch (activeQuestion.answerType) {
+	private Answer getAnswer(Question question) {
+		switch (question.getAnswerType()) {
 			case PERFECT:
 				return new Answer(perfectAuxTE.getText().toString(), perfectInputTE.getText().toString());
 			case PRETERITE:
@@ -165,23 +157,16 @@ public class EntryPointActivity extends Activity {
 	}
 	
 	private void displayCorrectAnswer(Question question) {
-		switch (question.answerType) {
+		switch (question.getAnswerType()) {
 		case PRETERITE:
-			preteriteInputTE.setText(question.verb.getPreterites().iterator().next().getPreterite());
+			preteriteInputTE.setText(question.getVerb().getPreterites().iterator().next().getPreterite());
 			break;
 		case PERFECT:
-			Perfect perfect = question.verb.getPerfects().iterator().next();
+			Perfect perfect = question.getVerb().getPerfects().iterator().next();
 			perfectAuxTE.setText(perfect.getAuxVerb());
 			perfectInputTE.setText(perfect.getPerfect());
 			break;
 		}
-	}
-	
-	
-	private class Question {
-		private AnswerType answerType;
-		private VerbDTO verb;
-		
 	}
 
 }

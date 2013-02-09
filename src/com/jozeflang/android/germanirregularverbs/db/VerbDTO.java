@@ -32,7 +32,7 @@ public class VerbDTO {
 		return present;
 	}
 	
-	public void addTranslation(String translation) {
+	void addTranslation(String translation) {
 		translations.add(new Translation(translation));
 	}
 	
@@ -40,7 +40,7 @@ public class VerbDTO {
 		return Collections.unmodifiableCollection(translations);
 	}
 	
-	public void addPerfect(String auxVerb, String perfect) {
+	void addPerfect(String auxVerb, String perfect) {
 		perfects.add(new Perfect(auxVerb, perfect));
 	}
 	
@@ -48,7 +48,7 @@ public class VerbDTO {
 		return Collections.unmodifiableCollection(perfects);
 	}
 	
-	public void addPreterite(String preterite) {
+	void addPreterite(String preterite) {
 		preterites.add(new Preterite(preterite));
 	}
 	
