@@ -4,7 +4,7 @@ import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.validator.AnswerType;
 
 /** 
- * Entry point activity
+ * Question object
  * @author Jozef Lang (developer@jozeflang.com)
  */
 public class Question {

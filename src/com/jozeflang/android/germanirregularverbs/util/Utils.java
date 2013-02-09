@@ -8,6 +8,7 @@ import java.util.Random;
 
 
 /** 
+ * Library class
  * @author @author Jozef Lang (developer@jozeflang.com)
  */
 public class Utils {

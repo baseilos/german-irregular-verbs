@@ -7,7 +7,7 @@ import com.jozeflang.android.germanirregularverbs.db.VerbProvider;
 import android.app.Application;
 
 /** 
- * Entry point activity
+ * Application class
  * @author Jozef Lang (developer@jozeflang.com)
  */
 public class GermanIrregularVerbsApplication extends Application {
