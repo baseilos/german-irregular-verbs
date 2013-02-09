@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:background="@drawable/app_bkg">
 
     <TextView
         android:id="@+id/displayTW"
@@ -10,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textSize="39sp" 
-		android:textStyle="bold" />
+		android:textStyle="bold"
+		android:textColor="@color/white" />
     
     <TextView
         android:id="@+id/answerTypeTW"
@@ -18,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textSize="26sp" 
-		android:textStyle="bold" />
+		android:textStyle="bold" 
+		android:textColor="@color/white" />
     
     <LinearLayout
         android:id="@+id/perfectLayout" 
