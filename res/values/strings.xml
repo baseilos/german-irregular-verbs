@@ -11,5 +11,8 @@
     <string name="mainmenu_about_label">About</string>
     <string name="about_closeBtn_label">Close</string>
     <string name="about_header">About</string>
+    <string name="hint_auxverb">Aux</string>
+    <string name="hint_perfect">Verb in perfect</string>
+    <string name="hint_preterite">Verb in preterite</string>
 
 </resources>
