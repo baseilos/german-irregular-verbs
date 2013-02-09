@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -13,6 +15,29 @@ import java.util.Random;
  */
 public class Utils {
 
+	/**
+	 * Character escape map: <br />
+	 * <ul>
+	 * 	<li>ß = ss</li>
+	 *  <li>Ö = Oe</li> 
+	 *  <li>ö = oe</li>
+	 *  <li>Ä = Ae</li>
+	 *  <li>ä = ae</li>
+	 *  <li>Ü = Ue</li>
+	 *  <li>ü = ue</li>
+	 * </ul>
+	 */
+	private final static Map<Character, String> escapeCharacterMap = new HashMap<Character, String>();
+	static {
+		escapeCharacterMap.put('ß', "ss");
+		escapeCharacterMap.put('Ü', "Ue");
+		escapeCharacterMap.put('ü', "ue");
+		escapeCharacterMap.put('Ö', "Oe");
+		escapeCharacterMap.put('ö', "oe");
+		escapeCharacterMap.put('Ä', "Ae");
+		escapeCharacterMap.put('ä', "ae");
+	}
+	
 	private Utils() {
 		
 	}
@@ -67,6 +92,25 @@ public class Utils {
 			}
 		} catch (IOException e) {
 			return sb.toString();
+		}
+		return sb.toString();
+	}
+	
+	/**
+	 * Escapes German characters.
+	 * @param s
+	 * @return
+	 * @see {@link Utils#escapeCharacterMap}
+	 */
+	public static String escapeGermanCharacters(final String s) {
+		if (s == null)
+			return null;
+		if (s.isEmpty())
+			return s;
+		StringBuilder sb = new StringBuilder();
+		for (char c : s.toCharArray()) {
+			String escapedCharacter = escapeCharacterMap.get(Character.valueOf(c));
+			sb.append(escapedCharacter == null ? c : escapedCharacter);
 		}
 		return sb.toString();
 	}

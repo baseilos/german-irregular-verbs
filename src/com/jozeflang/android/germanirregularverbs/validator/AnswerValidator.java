@@ -2,6 +2,7 @@ package com.jozeflang.android.germanirregularverbs.validator;
 
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.main.Answer;
+import com.jozeflang.android.germanirregularverbs.util.Utils;
 
 /** 
  * Answer validator
@@ -26,7 +27,8 @@ public class AnswerValidator {
 	
 	private static boolean validatePerfect(VerbDTO verb, final Answer answer) {
 		for (VerbDTO.Perfect p : verb.getPerfects()) {
-			if (p.getAuxVerb().equalsIgnoreCase(answer.getAuxVerb()) && p.getPerfect().equalsIgnoreCase(answer.getVerb()))
+			if (Utils.escapeGermanCharacters(p.getAuxVerb()).equalsIgnoreCase(answer.getAuxVerb()) 
+					&& Utils.escapeGermanCharacters(p.getPerfect()).equalsIgnoreCase(answer.getVerb()))
 				return true;
 		}
 		return false;
@@ -34,7 +36,7 @@ public class AnswerValidator {
 	
 	private static boolean validatePreterite(VerbDTO verb, final Answer answer) {
 		for (VerbDTO.Preterite p : verb.getPreterites()) {
-			if (p.getPreterite().equalsIgnoreCase(answer.getVerb()))
+			if (Utils.escapeGermanCharacters(p.getPreterite()).equalsIgnoreCase(answer.getVerb()))
 				return true;
 		}
 		return false;

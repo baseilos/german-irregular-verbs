@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO.Perfect;
+import com.jozeflang.android.germanirregularverbs.util.Utils;
 import com.jozeflang.android.germanirregularverbs.validator.AnswerValidator;
 
 /** 
@@ -159,12 +160,12 @@ public class EntryPointActivity extends Activity {
 	private void displayCorrectAnswer(Question question) {
 		switch (question.getAnswerType()) {
 		case PRETERITE:
-			preteriteInputTE.setText(question.getVerb().getPreterites().iterator().next().getPreterite());
+			preteriteInputTE.setText(Utils.escapeGermanCharacters(question.getVerb().getPreterites().iterator().next().getPreterite()));
 			break;
 		case PERFECT:
 			Perfect perfect = question.getVerb().getPerfects().iterator().next();
-			perfectAuxTE.setText(perfect.getAuxVerb());
-			perfectInputTE.setText(perfect.getPerfect());
+			perfectAuxTE.setText(Utils.escapeGermanCharacters(perfect.getAuxVerb()));
+			perfectInputTE.setText(Utils.escapeGermanCharacters(perfect.getPerfect()));
 			break;
 		}
 	}
