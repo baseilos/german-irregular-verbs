@@ -5,14 +5,14 @@
     <string name="skipbtn_label">Skip</string>
     <string name="incorrect_answer">Incorrect answer</string>
     <string name="answerType_present">Present</string>
-    <string name="answerType_perfect">Perfect</string>
+    <string name="answerType_perfect">Perfekt</string>
     <string name="answerType_preterite">Preterite</string>
     <string name="helpbtn_label">Help</string>
     <string name="mainmenu_about_label">About</string>
     <string name="about_closeBtn_label">Close</string>
     <string name="about_header">About</string>
     <string name="hint_auxverb">Aux</string>
-    <string name="hint_perfect">Verb in perfect</string>
+    <string name="hint_perfect">Verb in perfekt</string>
     <string name="hint_preterite">Verb in preterite</string>
 
 </resources>
