@@ -3,14 +3,14 @@ package com.jozeflang.android.germanirregularverbs.main;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.jozeflang.android.germanirregularverbs.util.Utils;
-
+import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+
+import com.jozeflang.android.germanirregularverbs.util.Utils;
 
 /** 
  * About dialog 
@@ -18,9 +18,8 @@ import android.widget.Button;
  */
 public class AboutDialog extends Dialog {
 	
-	public AboutDialog(Context context) {
-		super(context);
-		setTitle(context.getString(R.string.about_header));
+	public AboutDialog(Activity activity) {
+		super(activity);
 	}
 
 	@Override

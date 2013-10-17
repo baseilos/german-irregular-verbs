@@ -58,6 +58,7 @@ public class EntryPointActivity extends Activity {
 		switch (item.getItemId()) {
 			case R.id.mainmenu_about:
 				AboutDialog aboutDialog = new AboutDialog(this);
+				aboutDialog.setTitle(this.getString(R.string.about_header));
 				aboutDialog.show();
 			break;
 		}
