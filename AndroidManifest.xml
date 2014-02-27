@@ -22,6 +22,10 @@ UNCOMMENT TO ENABLE GOOGLE MAPS
 			    <category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+
+        <activity android:label="@string/verblist_activity_name" android:name="VerbListActivity">
+        </activity>
+
 	</application>
 
 <!-- 

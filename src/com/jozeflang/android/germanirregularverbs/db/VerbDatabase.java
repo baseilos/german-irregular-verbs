@@ -1,18 +1,20 @@
 package com.jozeflang.android.germanirregularverbs.db;
 
-import java.util.Arrays;
-
-import com.jozeflang.android.germanirregularverbs.db.table.PerfectTable;
-import com.jozeflang.android.germanirregularverbs.db.table.PreteriteTable;
-import com.jozeflang.android.germanirregularverbs.db.table.TranslationTable;
-import com.jozeflang.android.germanirregularverbs.db.table.VerbTable;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import com.jozeflang.android.germanirregularverbs.db.table.PerfectTable;
+import com.jozeflang.android.germanirregularverbs.db.table.PreteriteTable;
+import com.jozeflang.android.germanirregularverbs.db.table.TranslationTable;
+import com.jozeflang.android.germanirregularverbs.db.table.VerbTable;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /** 
  * A singleton helper for working with word database
@@ -72,6 +74,32 @@ enum VerbDatabase {
 		getPreterites(verb);
 		return verb;
 	}
+
+    /**
+     * Returns a list of all verbs stored in database
+     * @return
+     */
+    public List<VerbDTO> getAllVerbs() {
+        List<VerbDTO> allVerbs = getAllVerbsFromDb();
+        for (VerbDTO verb : allVerbs) {
+            getTranslations(verb);
+            getPerfects(verb);
+            getPreterites(verb);
+        }
+        return allVerbs;
+    }
+
+    private List<VerbDTO> getAllVerbsFromDb() {
+        List<VerbDTO> verbList = new ArrayList<VerbDTO>();
+        Cursor c = getHandler().query(VerbTable.TABLE_NAME, new String[] {VerbTable.COLUMN_ID, VerbTable.COLUMN_PRESENT}, null, null, null, null, null);
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            verbList.add(VerbDTO.of(c.getInt(0), c.getString(1)));
+            c.moveToNext();
+        }
+        c.close();
+        return verbList;
+    }
 	
 	/**
 	 * Returns basic VerbDTO object from data stored in database

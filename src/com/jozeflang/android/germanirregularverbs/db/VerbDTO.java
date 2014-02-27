@@ -74,6 +74,11 @@ public class VerbDTO {
 		public String getTranslation() {
 			return translation;
 		}
+
+        @Override
+        public String toString() {
+            return getTranslation();
+        }
 		
 	}
 	
@@ -91,7 +96,11 @@ public class VerbDTO {
 		public String getPreterite() {
 			return preterite;
 		}
-		
+
+        @Override
+        public String toString() {
+            return getPreterite();
+        }
 	}
 
 	/**
@@ -114,6 +123,11 @@ public class VerbDTO {
 		public String getPerfect() {
 			return perfect;
 		}
+
+        @Override
+        public String toString() {
+            return getAuxVerb() + " " + getPerfect();
+        }
 		
 	}
 	

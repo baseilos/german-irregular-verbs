@@ -1,12 +1,13 @@
 package com.jozeflang.android.germanirregularverbs.main;
 
-import java.util.logging.Logger;
-
+import android.app.Application;
+import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.db.VerbProvider;
 
-import android.app.Application;
+import java.util.List;
+import java.util.logging.Logger;
 
-/** 
+/**
  * Application class
  * @author Jozef Lang (developer@jozeflang.com)
  */
@@ -31,10 +32,6 @@ public class GermanIrregularVerbsApplication extends Application {
 		verbProvider.closeProvider();
 	}
 	
-	public VerbProvider getVerbProvider() {
-		return verbProvider;
-	}
-	
 	public Question getQuestion() {
 		return activeQuestion;
 	}
@@ -46,5 +43,9 @@ public class GermanIrregularVerbsApplication extends Application {
 		}
 		return activeQuestion;
 	}
+
+    public List<VerbDTO> getVerbs() {
+        return verbProvider.getAllVerbs();
+    }
 	
 }

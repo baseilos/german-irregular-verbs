@@ -1,6 +1,7 @@
 package com.jozeflang.android.germanirregularverbs.main;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.Menu;
@@ -60,6 +61,9 @@ public class EntryPointActivity extends Activity {
 				AboutDialog aboutDialog = new AboutDialog(this);
 				aboutDialog.setTitle(this.getString(R.string.about_header));
 				aboutDialog.show();
+            case R.id.mainmenu_verbList:
+                Intent intent = new Intent(this, VerbListActivity.class);
+                startActivity(intent);
 			break;
 		}
 		

@@ -9,10 +9,15 @@
     <string name="answerType_preterite">Preterite</string>
     <string name="helpbtn_label">Help</string>
     <string name="mainmenu_about_label">About</string>
+    <string name="mainmenu_verbslist">Verbs</string>
     <string name="about_closeBtn_label">Close</string>
     <string name="about_header">About</string>
     <string name="hint_auxverb">Aux</string>
     <string name="hint_perfect">Verb in perfekt</string>
     <string name="hint_preterite">Verb in preterite</string>
+    <string name="verblist_activity_name"></string>
+    <string name="verblist_verb">Verb</string>
+    <string name="verblist_perfect">Perfekt</string>
+    <string name="verblist_preterite">Preterite</string>
 
 </resources>
