@@ -1,5 +1,7 @@
 package com.jozeflang.android.germanirregularverbs.util;
 
+import android.text.TextUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -105,7 +107,7 @@ public class Utils {
 	public static String escapeGermanCharacters(final String s) {
 		if (s == null)
 			return null;
-		if (s.isEmpty())
+		if (TextUtils.isEmpty(s))
 			return s;
 		StringBuilder sb = new StringBuilder();
 		for (char c : s.toCharArray()) {
