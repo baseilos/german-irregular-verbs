@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO.Perfect;
+import com.jozeflang.android.germanirregularverbs.main.data.Answer;
+import com.jozeflang.android.germanirregularverbs.main.data.Question;
 import com.jozeflang.android.germanirregularverbs.util.Utils;
 import com.jozeflang.android.germanirregularverbs.validator.AnswerValidator;
 
@@ -61,6 +63,7 @@ public class EntryPointActivity extends Activity {
 				AboutDialog aboutDialog = new AboutDialog(this);
 				aboutDialog.setTitle(this.getString(R.string.about_header));
 				aboutDialog.show();
+                break;
             case R.id.mainmenu_verbList:
                 Intent intent = new Intent(this, VerbListActivity.class);
                 startActivity(intent);

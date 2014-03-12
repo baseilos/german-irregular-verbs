@@ -12,13 +12,15 @@ public class VerbDTO {
 	 
 	private final int id;
 	private final String present;
+    private final boolean active;
 	private final Collection<Translation> translations;
 	private final Collection<Perfect> perfects;
 	private final Collection<Preterite> preterites;
 	
-	private VerbDTO(int id, String present) {
+	private VerbDTO(int id, String present, boolean active) {
 		this.id = id;
 		this.present = present;
+        this.active = active;
 		translations = new ArrayList<Translation>();
 		perfects = new ArrayList<Perfect>();
 		preterites = new ArrayList<Preterite>();
@@ -31,6 +33,8 @@ public class VerbDTO {
 	public String getPresent() {
 		return present;
 	}
+
+    public boolean isActive() { return active; }
 	
 	void addTranslation(String translation) {
 		translations.add(new Translation(translation));
@@ -56,8 +60,8 @@ public class VerbDTO {
 		return Collections.unmodifiableCollection(preterites);
 	}
 	
-	static VerbDTO of(int id, String present) {
-		 return new VerbDTO(id, present);
+	static VerbDTO of(int id, String present, int active) {
+		 return new VerbDTO(id, present, active == 1);
 	 }
 	
 	/**

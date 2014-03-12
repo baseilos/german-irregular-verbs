@@ -1,4 +1,4 @@
-package com.jozeflang.android.germanirregularverbs.main;
+package com.jozeflang.android.germanirregularverbs.main.data;
 
 /** 
  * Answer object

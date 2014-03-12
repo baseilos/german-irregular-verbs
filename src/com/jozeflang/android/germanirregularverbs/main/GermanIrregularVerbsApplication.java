@@ -3,6 +3,7 @@ package com.jozeflang.android.germanirregularverbs.main;
 import android.app.Application;
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.db.VerbProvider;
+import com.jozeflang.android.germanirregularverbs.main.data.Question;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -44,8 +45,12 @@ public class GermanIrregularVerbsApplication extends Application {
 		return activeQuestion;
 	}
 
-    public List<VerbDTO> getVerbs() {
-        return verbProvider.getAllVerbs();
+    public List<VerbDTO> getVerbs(boolean onlyActive) {
+        return getVerbs(onlyActive, "");
+    }
+
+    public List<VerbDTO> getVerbs(boolean onlyActive, String filter) {
+        return verbProvider.getAllVerbs(onlyActive, filter);
     }
 	
 }

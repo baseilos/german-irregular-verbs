@@ -1,4 +1,4 @@
-package com.jozeflang.android.germanirregularverbs.main;
+package com.jozeflang.android.germanirregularverbs.main.data;
 
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.validator.AnswerType;

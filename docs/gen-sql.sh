@@ -8,7 +8,7 @@ do
 	PERFECT=`echo ${line} | awk '{print $4}'`
 	TRANSLATION=`echo ${line} | awk '{print $5}'`
 	
-	echo "INSERT INTO verb (id, present) VALUES(${VERB_ID}, '${PRESENT}');"
+	echo "INSERT INTO verb (id, present, active) VALUES(${VERB_ID}, '${PRESENT}', 1);"
 	
 	# TRANSLATION
 	for TRAN in $(echo ${TRANSLATION} | tr '/' ' ')

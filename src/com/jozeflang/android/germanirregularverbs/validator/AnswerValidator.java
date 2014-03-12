@@ -1,7 +1,7 @@
 package com.jozeflang.android.germanirregularverbs.validator;
 
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
-import com.jozeflang.android.germanirregularverbs.main.Answer;
+import com.jozeflang.android.germanirregularverbs.main.data.Answer;
 import com.jozeflang.android.germanirregularverbs.util.Utils;
 
 /** 

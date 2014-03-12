@@ -2,7 +2,7 @@ package com.jozeflang.android.germanirregularverbs.db;
 
 
 import android.content.Context;
-import com.jozeflang.android.germanirregularverbs.main.Question;
+import com.jozeflang.android.germanirregularverbs.main.data.Question;
 import com.jozeflang.android.germanirregularverbs.util.Utils;
 import com.jozeflang.android.germanirregularverbs.validator.AnswerType;
 
@@ -55,22 +55,25 @@ public class VerbProvider {
 	
 	/**
 	 * Returns verb count
+     * @param onlyActive
 	 * @return
 	 */
-	public long getVerbCount() {
-		return VerbDatabase.INSTANCE.getVerbCount();
+	public long getVerbCount(boolean onlyActive) {
+		return VerbDatabase.INSTANCE.getVerbCount(onlyActive);
 	}
 
     /**
      * Returns a list of all verbs
+     * @param onlyAcive
+     * @param filter
      * @return
      */
-    public List<VerbDTO> getAllVerbs() {
-        return VerbDatabase.INSTANCE.getAllVerbs();
+    public List<VerbDTO> getAllVerbs(boolean onlyAcive, String filter) {
+        return VerbDatabase.INSTANCE.getAllVerbs(onlyAcive, filter);
     }
 	
 	private int getNextVerbId() {
-		return Utils.getRandom(1, Utils.longToInt(getVerbCount()));
+		return Utils.getRandom(1, Utils.longToInt(getVerbCount(false)));
 	}
 	
 }
