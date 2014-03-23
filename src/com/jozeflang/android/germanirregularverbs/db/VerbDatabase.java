@@ -1,5 +1,6 @@
 package com.jozeflang.android.germanirregularverbs.db;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -105,6 +106,11 @@ enum VerbDatabase {
             getPreterites(verb);
         }
         return allVerbs;
+    }
+
+    public int updateVerb(VerbDTO verb) {
+        String whereCondition = String.format("%s = %d", VerbTable.COLUMN_ID, verb.getId());
+        return getHandler(false).update(VerbTable.TABLE_NAME, VerbTable.createContentValues(verb), whereCondition, null);
     }
 
     private List<VerbDTO> getAllVerbsFromDb(boolean onlyActive, String filter) {
@@ -231,7 +237,7 @@ enum VerbDatabase {
 	 */
 	private class VerbDatabaseHelper extends SQLiteOpenHelper {
 
-		public VerbDatabaseHelper(Context context) {
+		private VerbDatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		}
 

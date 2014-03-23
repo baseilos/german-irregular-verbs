@@ -52,5 +52,11 @@ public class GermanIrregularVerbsApplication extends Application {
     public List<VerbDTO> getVerbs(boolean onlyActive, String filter) {
         return verbProvider.getAllVerbs(onlyActive, filter);
     }
+
+    public void updateVerb(VerbDTO verb) {
+        int rowsUpdated = verbProvider.updateVerb(verb);
+        logger.fine(String.format("Verb %s updated. Updated %d records", verb.getPresent(), rowsUpdated));
+
+    }
 	
 }

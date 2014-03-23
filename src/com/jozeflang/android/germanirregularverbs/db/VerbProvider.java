@@ -71,6 +71,15 @@ public class VerbProvider {
     public List<VerbDTO> getAllVerbs(boolean onlyAcive, String filter) {
         return VerbDatabase.INSTANCE.getAllVerbs(onlyAcive, filter);
     }
+
+    /**
+     * Updates verb
+     * @param verb
+     * @return
+     */
+    public int updateVerb(VerbDTO verb) {
+        return VerbDatabase.INSTANCE.updateVerb(verb);
+    }
 	
 	private int getNextVerbId() {
 		return Utils.getRandom(1, Utils.longToInt(getVerbCount(false)));

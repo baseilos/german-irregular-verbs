@@ -1,16 +1,19 @@
 package com.jozeflang.android.germanirregularverbs.main;
 
 import android.app.Activity;
+import android.content.Context;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.*;
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
+import com.jozeflang.android.germanirregularverbs.util.Utils;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author Jozef Lang (developer@jozeflang.com)
@@ -18,6 +21,7 @@ import java.util.List;
 public class VerbListActivity extends Activity {
 
     private GermanIrregularVerbsApplication application;
+    private final Logger logger = Logger.getLogger(VerbListActivity.class.getName());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,23 +40,9 @@ public class VerbListActivity extends Activity {
         // Add a row for every found verb
         List<VerbDTO> verbs = application.getVerbs(onlyActive, filter);
         for (VerbDTO verb : verbs) {
-            TableRow tr = new TableRow(this);
-            setRow(tr, verb);
-            table.addView(tr);
+            table.addView(new VerbListTableRow(this, verb));
         }
         table.requestLayout();
-    }
-
-    private void setRow(TableRow row, VerbDTO verb) {
-        row.addView(createTextView(verb.getPresent()));
-        row.addView(createTextView(verb.getPerfects().toArray(new VerbDTO.Perfect[] {})[0].toString()));
-        row.addView(createTextView(verb.getPreterites().toArray(new VerbDTO.Preterite[] {})[0].toString()));
-    }
-
-    private TextView createTextView(String text) {
-        TextView tw = new TextView(this);
-        tw.setText(text);
-        return tw;
     }
 
     private final class SearchTextWatcher implements TextWatcher {
@@ -66,5 +56,64 @@ public class VerbListActivity extends Activity {
         public void afterTextChanged(Editable editable) {
             generateTableData((TableLayout) findViewById(R.id.verblist_table), false, editable.toString());
         }
+    }
+
+    private final class VerbListTableRow extends TableRow implements View.OnLongClickListener {
+
+        private VerbDTO verb;
+
+        private VerbListTableRow(Context context, VerbDTO verb) {
+            super(context);
+            this.verb = verb;
+            setClickable(true);
+            setOnLongClickListener(this);
+            redrawRow();
+        }
+
+        private VerbDTO getVerb() {
+            return verb;
+        }
+
+        private void setVerb(VerbDTO verb) {
+            this.verb = verb;
+            redrawRow();
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (!(view instanceof VerbListTableRow)) {
+                return false;
+            }
+            VerbListTableRow row = (VerbListTableRow) view;
+            VerbDTO updatedVerb = row.getVerb().switchActive();
+            application.updateVerb(updatedVerb);
+            row.setVerb(updatedVerb);
+            return true;
+        }
+
+        private void redrawRow() {
+            removeAllViewsInLayout();
+            if (verb.isActive()) {
+                addView(createTickView());
+            } else {
+                addView(createTextView(""));
+            }
+            addView(createTextView(verb.getPresent()));
+            addView(createTextView(Utils.buildDelimitedString(verb.getPerfects(), ",")));
+            addView(createTextView(Utils.buildDelimitedString(verb.getPreterites(), ",")));
+        }
+
+        private TextView createTextView(String text) {
+            TextView tw = new TextView(getContext());
+            tw.setText(text);
+            return tw;
+        }
+
+        private ImageView createTickView() {
+            ImageView iw = new ImageView(getContext());
+            iw.setImageResource(R.drawable.tick);
+            return iw;
+        }
+
     }
 }

@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -116,4 +117,23 @@ public class Utils {
 		}
 		return sb.toString();
 	}
+
+    /**
+     * Constructs a String containing values of collection delimited by delimiter string
+     * @param collection
+     * @param delimiter
+     * @return
+     */
+    public static String buildDelimitedString(Collection<?> collection, String delimiter) {
+        StringBuilder sb = new StringBuilder();
+        boolean wasAtleastOne = false;
+        for (Object e : collection) {
+            if (wasAtleastOne) {
+                sb.append(delimiter);
+            }
+            wasAtleastOne = true;
+            sb.append(e.toString());
+        }
+        return sb.toString();
+    }
 }

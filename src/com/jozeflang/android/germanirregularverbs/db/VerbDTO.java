@@ -1,5 +1,7 @@
 package com.jozeflang.android.germanirregularverbs.db;
 
+import android.content.ContentValues;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -24,8 +26,26 @@ public class VerbDTO {
 		translations = new ArrayList<Translation>();
 		perfects = new ArrayList<Perfect>();
 		preterites = new ArrayList<Preterite>();
-	}
-	
+    }
+
+    private VerbDTO(VerbDTO verb, boolean isActive) {
+        this.id = verb.id;
+        this.present = verb.present;
+        this.active = isActive;
+        this.translations = new ArrayList<Translation>();
+        for (Translation t : verb.translations) {
+            this.translations.add(new Translation(t));
+        }
+        this.perfects = new ArrayList<Perfect>();
+        for (Perfect p : verb.perfects) {
+            this.perfects.add(new Perfect(p));
+        }
+        this.preterites = new ArrayList<Preterite>();
+        for (Preterite p : verb.preterites) {
+            this.preterites.add(new Preterite(p));
+        }
+    }
+
 	public int getId() {
 		return id;
 	}
@@ -35,7 +55,12 @@ public class VerbDTO {
 	}
 
     public boolean isActive() { return active; }
-	
+
+    public VerbDTO switchActive() {
+        VerbDTO newVerb = new VerbDTO(this, !active);
+        return newVerb;
+    }
+
 	void addTranslation(String translation) {
 		translations.add(new Translation(translation));
 	}
@@ -74,6 +99,10 @@ public class VerbDTO {
 		private Translation(String translation) {
 			this.translation = translation;
 		}
+
+        private Translation(Translation translation) {
+            this.translation = translation.translation;
+        }
 		
 		public String getTranslation() {
 			return translation;
@@ -96,6 +125,10 @@ public class VerbDTO {
 		private Preterite(String preterite) {
 			this.preterite = preterite;
 		}
+
+        private Preterite(Preterite preterite) {
+            this.preterite = preterite.preterite;
+        }
 		
 		public String getPreterite() {
 			return preterite;
@@ -119,6 +152,11 @@ public class VerbDTO {
 			this.auxVerb = auxVerb;
 			this.perfect = perfect;
 		}
+
+        private Perfect(Perfect perfect) {
+            this.auxVerb = perfect.auxVerb;
+            this.perfect = perfect.perfect;
+        }
 		
 		public String getAuxVerb() {
 			return auxVerb;
