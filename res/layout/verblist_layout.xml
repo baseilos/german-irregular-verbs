@@ -15,7 +15,7 @@
         <TableLayout android:orientation="vertical"
                      android:layout_width="match_parent"
                      android:layout_height="wrap_content"
-                     android:stretchColumns="3"
+                     android:stretchColumns="*"
                      android:id="@+id/verblist_table">
 
             <TableRow android:orientation="horizontal"
@@ -26,19 +26,22 @@
                           android:layout_width="match_parent"
                           android:textStyle="bold"
                           android:gravity="center"
-                          android:layout_weight="1" />
+                          android:layout_weight="1"
+                          android:layout_column="0" />
 
                 <TextView android:text="@string/verblist_preterite"
                           android:layout_width="fill_parent"
                           android:textStyle="bold"
                           android:gravity="center"
-                          android:layout_weight="1"/>
+                          android:layout_weight="1"
+                          android:layout_column="1" />
 
                 <TextView android:text="@string/verblist_perfect"
                           android:layout_width="fill_parent"
                           android:textStyle="bold"
                           android:gravity="center"
-                          android:layout_weight="1"/>
+                          android:layout_weight="1"
+                          android:layout_column="2" />
 
             </TableRow>
 

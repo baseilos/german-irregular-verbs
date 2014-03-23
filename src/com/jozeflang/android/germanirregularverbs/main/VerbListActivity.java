@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -31,7 +30,10 @@ public class VerbListActivity extends Activity {
     }
 
     private void generateTableData(TableLayout table, boolean onlyActive, String filter) {
+        TableRow tableHeaderRow = (TableRow) table.getChildAt(0);
         table.removeAllViewsInLayout();
+        table.addView(tableHeaderRow);
+        // Add a row for every found verb
         List<VerbDTO> verbs = application.getVerbs(onlyActive, filter);
         for (VerbDTO verb : verbs) {
             TableRow tr = new TableRow(this);
