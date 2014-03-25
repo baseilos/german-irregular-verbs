@@ -23,7 +23,7 @@ import java.util.List;
  */
 enum VerbDatabase {
     INSTANCE;
-    
+
     private final String DATABASE_NAME = "verbs";
     private final int DATABASE_VERSION = 2;
 	
@@ -91,6 +91,10 @@ enum VerbDatabase {
 		getPreterites(verb);
 		return verb;
 	}
+
+    public VerbDTO getNthVerb(int n, boolean activeOnly) {
+        return getVerb(getNthVerbIdFromDb(n, activeOnly));
+    }
 
     /**
      * Returns a list of all verbs stored in database
@@ -160,6 +164,30 @@ enum VerbDatabase {
 		c.close();
 		return VerbDTO.of(verbId, verbPresent, verbActive);
 	}
+
+    /**
+     * Returns n-th verb from the database.
+     * @param n
+     * @param activeOnly
+     * @return
+     */
+    private int getNthVerbIdFromDb(final int n, boolean activeOnly) {
+        String limitStr = String.format("%d,1", n);
+        Cursor c = null;
+        if (activeOnly) {
+            c = getHandler().query(VerbTable.TABLE_NAME, new String[] {VerbTable.COLUMN_ID}, VerbTable.COLUMN_ACTIVE + " = 1", null, null, null, null, limitStr);
+        } else {
+            c = getHandler().query(VerbTable.TABLE_NAME, new String[] {VerbTable.COLUMN_ID}, null, null, null, null, null, limitStr);
+        }
+        int verbId = -1;
+        c.moveToFirst();
+        while (!c.isAfterLast()) {
+            verbId = c.getInt(0);
+            c.moveToNext();
+        }
+        c.close();
+        return verbId;
+    }
 	
 	/**
 	 * Returns translations from data stored in database

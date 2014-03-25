@@ -35,7 +35,7 @@ public class VerbProvider {
 	 * @return
 	 */
 	public VerbDTO getNextVerb() {
-		return VerbDatabase.INSTANCE.getVerb(getNextVerbId());
+		return VerbDatabase.INSTANCE.getNthVerb(getNextVerbPosition(), true);
 	}
 	
 	public AnswerType getAnswerType() {
@@ -82,7 +82,10 @@ public class VerbProvider {
     }
 	
 	private int getNextVerbId() {
-		return Utils.getRandom(1, Utils.longToInt(getVerbCount(false)));
+		return Utils.getRandom(1, Utils.longToInt(getVerbCount(true)));
 	}
-	
+
+    private int getNextVerbPosition() {
+        return Utils.getRandom(0, Utils.longToInt(getVerbCount(true)-1));
+    }
 }

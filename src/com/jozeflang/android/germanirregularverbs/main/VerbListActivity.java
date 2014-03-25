@@ -21,7 +21,6 @@ import java.util.logging.Logger;
 public class VerbListActivity extends Activity {
 
     private GermanIrregularVerbsApplication application;
-    private final Logger logger = Logger.getLogger(VerbListActivity.class.getName());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
