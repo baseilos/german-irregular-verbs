@@ -35,16 +35,16 @@ public class EntryPointActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		application = ((GermanIrregularVerbsApplication) getApplication());
-		
-		// Initialize UI components
-		setContentView(R.layout.main_layout);
-		initScreenElements(savedInstanceState);
-		
-		// Display currently active question
-		displayQuestion(application.getQuestion());
+        initActivity(savedInstanceState);
 	}
 
-	@Override
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initActivity(null);
+    }
+
+    @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		try {
@@ -72,6 +72,19 @@ public class EntryPointActivity extends Activity {
 		
 		return super.onOptionsItemSelected(item);
 	}
+
+    private void initActivity(Bundle savedInstanceState) {
+        // If there is no active verb start verb list activity first
+        if (application.getVerbCount(true) <= 0) {
+            startActivity(new Intent(this, VerbListActivity.class));
+        } else {
+            // Initialize UI components
+            setContentView(R.layout.main_layout);
+            initScreenElements(savedInstanceState);
+            // Display question
+            displayQuestion(application.getQuestion(true));
+        }
+    }
 
 	private void initScreenElements(Bundle savedInstanceState) {
 		perfectAuxTE = ((EditText) findViewById(R.id.perfectAuxVerbInputTE));

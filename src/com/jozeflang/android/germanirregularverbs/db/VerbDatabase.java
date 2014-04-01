@@ -117,6 +117,15 @@ enum VerbDatabase {
         return getHandler(false).update(VerbTable.TABLE_NAME, VerbTable.createContentValues(verb), whereCondition, null);
     }
 
+    public void setVerbsActivness(boolean isActive) {
+        getHandler(false).execSQL(String.format("UPDATE %s SET %s=%d", VerbTable.TABLE_NAME, VerbTable.COLUMN_ACTIVE, isActive ? 1 : 0));
+    }
+
+    public void invertVerbActivness() {
+        getHandler(false).execSQL(String.format("UPDATE %s SET %s=CASE WHEN %s = 0 THEN 1 ELSE 0 END", VerbTable.TABLE_NAME, VerbTable.COLUMN_ACTIVE, VerbTable.COLUMN_ACTIVE));
+    }
+
+
     private List<VerbDTO> getAllVerbsFromDb(boolean onlyActive, String filter) {
         List<VerbDTO> verbList = new ArrayList<VerbDTO>();
         String onlyActiveCondition = null;

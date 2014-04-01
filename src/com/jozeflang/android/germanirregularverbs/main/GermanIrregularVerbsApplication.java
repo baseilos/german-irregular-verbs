@@ -1,6 +1,7 @@
 package com.jozeflang.android.germanirregularverbs.main;
 
 import android.app.Application;
+import android.graphics.Typeface;
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.db.VerbProvider;
 import com.jozeflang.android.germanirregularverbs.main.data.Question;
@@ -15,17 +16,16 @@ import java.util.logging.Logger;
 public class GermanIrregularVerbsApplication extends Application {
 
 	private final Logger logger = Logger.getLogger(GermanIrregularVerbsApplication.class.getName());
-	
+
+    private Typeface fontAwesome;
 	private VerbProvider verbProvider;
 	private Question activeQuestion;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
+        fontAwesome = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
 		verbProvider = new VerbProvider(this);
-		
-		// Generate first question
-		getQuestion(true);
 	}
 
 	@Override
@@ -34,7 +34,11 @@ public class GermanIrregularVerbsApplication extends Application {
 	}
 	
 	public Question getQuestion() {
-		return activeQuestion;
+
+
+
+
+        return activeQuestion;
 	}
 	
 	public Question getQuestion(boolean newQuestion) {
@@ -58,5 +62,20 @@ public class GermanIrregularVerbsApplication extends Application {
         logger.fine(String.format("Verb %s updated. Updated %d records", verb.getPresent(), rowsUpdated));
 
     }
-	
+
+    public void setVerbsActivness(boolean isActive) {
+        verbProvider.setVerbsActivness(isActive);
+    }
+
+    public void invertVerbActivness() {
+        verbProvider.invertVerbsActivness();
+    }
+
+    public long getVerbCount(boolean activeOnly) {
+        return verbProvider.getVerbCount(activeOnly);
+    }
+
+    public Typeface getFontAwesome() {
+        return fontAwesome;
+    }
 }

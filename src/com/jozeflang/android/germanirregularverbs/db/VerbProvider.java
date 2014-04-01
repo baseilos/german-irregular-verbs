@@ -80,6 +80,14 @@ public class VerbProvider {
     public int updateVerb(VerbDTO verb) {
         return VerbDatabase.INSTANCE.updateVerb(verb);
     }
+
+    public void setVerbsActivness(boolean isActive) {
+        VerbDatabase.INSTANCE.setVerbsActivness(isActive);
+    }
+
+    public void invertVerbsActivness() {
+        VerbDatabase.INSTANCE.invertVerbActivness();
+    }
 	
 	private int getNextVerbId() {
 		return Utils.getRandom(1, Utils.longToInt(getVerbCount(true)));

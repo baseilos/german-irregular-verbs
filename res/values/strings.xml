@@ -15,10 +15,19 @@
     <string name="hint_auxverb">Aux</string>
     <string name="hint_perfect">Verb in perfekt</string>
     <string name="hint_preterite">Verb in preterite</string>
-    <string name="verblist_activity_name">German Irregular Verbs - Verb list</string>
+    <string name="verblist_search_hint">Filter verbs</string>
+    <string name="verblist_activity_name">German Irregular Verbs - Verbs</string>
     <string name="verblist_active">Active</string>
     <string name="verblist_verb">Verb</string>
     <string name="verblist_perfect">Perfekt</string>
     <string name="verblist_preterite">Preterite</string>
+    <string name="verblist_activate_all">Activate all</string>
+    <string name="verblist_inactivate_all">Deactivate all</string>
+    <string name="verblist_invert_all">Invert all</string>
+    <string name="verblist_atleast_one_active">Atleast one verb has to be active</string>
+
+    <!-- FontAwesome -->
+    <string name="fontawesome_circle">&#xf05d;</string>
+    <string name="fontawesome_cross">&#xf05c;</string>
 
 </resources>

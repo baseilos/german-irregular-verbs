@@ -1,5 +1,6 @@
 package com.jozeflang.android.germanirregularverbs.util;
 
+import android.graphics.Typeface;
 import android.text.TextUtils;
 
 import java.io.BufferedReader;
