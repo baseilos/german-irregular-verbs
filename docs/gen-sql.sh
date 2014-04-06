@@ -25,7 +25,12 @@ do
 	# PERFECT
 	for PERF in $(echo ${PERFECT} | tr '/' ' ')
 	do
-		echo "INSERT INTO perfect (verb_id, aux_verb, perfect) VALUES(${VERB_ID}, 'habe', '${PERF}');"
+	    AUX=hat
+	    if [[ `grep ${PRESENT} verbs-with-sein.lst` > 0 ]];
+	    then
+	        AUX=ist
+	    fi;
+		echo "INSERT INTO perfect (verb_id, aux_verb, perfect) VALUES(${VERB_ID}, '${AUX}', '${PERF}');"
 	done
 	
 	echo ""
