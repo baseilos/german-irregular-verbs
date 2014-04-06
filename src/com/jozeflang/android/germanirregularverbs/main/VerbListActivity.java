@@ -1,11 +1,9 @@
 package com.jozeflang.android.germanirregularverbs.main;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,10 +11,9 @@ import android.view.*;
 import android.widget.*;
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.util.Utils;
-import org.w3c.dom.Text;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
 
 /**
  * @author Jozef Lang (developer@jozeflang.com)
@@ -24,15 +21,25 @@ import java.util.logging.Logger;
 public class VerbListActivity extends Activity {
 
     private GermanIrregularVerbsApplication application;
+    private Context activityContext;
+    private TableLayout verbTable;
+    private EditText searchEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        application = (GermanIrregularVerbsApplication) getApplication();
         setContentView(R.layout.verblist_layout);
-        EditText searchText = (EditText) findViewById(R.id.verblistSearchEdit);
-        searchText.addTextChangedListener(new SearchTextWatcher());
-        generateTableData();
+        application = (GermanIrregularVerbsApplication) getApplication();
+        activityContext = this;
+        verbTable = (TableLayout) findViewById(R.id.verblist_table);
+        searchEditText = (EditText) findViewById(R.id.verblistSearchEdit);
+        searchEditText.addTextChangedListener(new SearchTextWatcher());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new LoadVerbsAsyncTask(this, verbTable).execute(getFilterString());
     }
 
     @Override
@@ -60,9 +67,8 @@ public class VerbListActivity extends Activity {
                 application.invertVerbActivness();
                 break;
         }
-        generateTableData();
-
-        return super.onOptionsItemSelected(item);
+        new LoadVerbsAsyncTask(activityContext, verbTable).execute(getFilterString());
+        return true;
     }
 
     @Override
@@ -78,21 +84,19 @@ public class VerbListActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private void generateTableData() {
-        EditText searchText = (EditText) findViewById(R.id.verblistSearchEdit);
-        generateTableData((TableLayout) findViewById(R.id.verblist_table), false, searchText.getText().toString());
-    }
-
-    private void generateTableData(TableLayout table, boolean onlyActive, String filter) {
+    private void generateTableData(TableLayout table, List<VerbDTO> verbs) {
         TableRow tableHeaderRow = (TableRow) table.getChildAt(0);
         table.removeAllViewsInLayout();
         table.addView(tableHeaderRow);
         // Add a row for every found verb
-        List<VerbDTO> verbs = application.getVerbs(onlyActive, filter);
         for (VerbDTO verb : verbs) {
             table.addView(new VerbListTableRow(this, verb));
         }
         table.requestLayout();
+    }
+
+    private String getFilterString() {
+        return searchEditText.getText().toString();
     }
 
     private final class SearchTextWatcher implements TextWatcher {
@@ -104,7 +108,7 @@ public class VerbListActivity extends Activity {
         }
         @Override
         public void afterTextChanged(Editable editable) {
-            generateTableData((TableLayout) findViewById(R.id.verblist_table), false, editable.toString());
+            new LoadVerbsAsyncTask(activityContext, verbTable).execute(editable.toString());
         }
     }
 
@@ -220,4 +224,43 @@ public class VerbListActivity extends Activity {
         }
 
     }
+
+    protected final class LoadVerbsAsyncTask extends AsyncTask<String, Void, List<VerbDTO>> {
+
+        private final ProgressDialog progressDialog;
+        private final TableLayout verbTable;
+
+        protected LoadVerbsAsyncTask(Context context, TableLayout verbTable) {
+            progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.pleaseWaitLabel));
+            this.verbTable = verbTable;
+        }
+
+        @Override
+        protected List<VerbDTO> doInBackground(String... filter) {
+            if (filter == null || filter.length < 1) {
+                return Collections.EMPTY_LIST;
+            }
+            return application.getVerbs(false, filter[0]);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onCancelled() {
+            progressDialog.dismiss();
+            super.onCancelled();
+        }
+
+        @Override
+        protected void onPostExecute(List<VerbDTO> verbDTOs) {
+            generateTableData(verbTable, verbDTOs);
+            progressDialog.dismiss();
+            super.onPostExecute(verbDTOs);
+        }
+    }
+
 }

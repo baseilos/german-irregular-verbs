@@ -26,6 +26,8 @@
     <string name="verblist_invert_all">Invert all</string>
     <string name="verblist_atleast_one_active">Atleast one verb has to be active</string>
 
+    <string name="pleaseWaitLabel">Please wait</string>
+
     <!-- FontAwesome -->
     <string name="fontawesome_circle">&#xf05d;</string>
     <string name="fontawesome_cross">&#xf05c;</string>
