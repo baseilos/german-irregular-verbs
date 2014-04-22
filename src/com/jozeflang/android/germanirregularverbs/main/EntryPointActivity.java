@@ -65,9 +65,11 @@ public class EntryPointActivity extends Activity {
 				aboutDialog.show();
                 break;
             case R.id.mainmenu_verbList:
-                Intent intent = new Intent(this, VerbListActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this, VerbListActivity.class));
 			break;
+            case R.id.mainmenu_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+            break;
 		}
 		
 		return super.onOptionsItemSelected(item);

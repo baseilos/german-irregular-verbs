@@ -52,6 +52,17 @@ public class VerbProvider {
 	public Question getQuestion() {
 		return new Question(getAnswerType(), getNextVerb());
 	}
+
+    /**
+     * A convenient method for generating new question<br />
+     * Method calls {@link VerbProvider#getAnswerType()} and {@link VerbProvider#getNextVerb()}
+     * and constructs new Question object from retrieved values.
+     * @param answerType
+     * @return
+     */
+    public Question getQuestion(AnswerType answerType) {
+        return new Question(answerType, getNextVerb());
+    }
 	
 	/**
 	 * Returns verb count

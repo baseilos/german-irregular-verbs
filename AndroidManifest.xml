@@ -6,16 +6,7 @@
 	    android:name="com.jozeflang.android.germanirregularverbs.main.GermanIrregularVerbsApplication" 
 	    android:icon="@drawable/ic_launcher" 
 	    android:label="@string/app_name">
-<!-- 
-===================================
-UNCOMMENT TO ENABLE GOOGLE MAPS
-===================================
--->
 
-<!--
- 	<uses-library android:name="com.google.android.maps"
-		android:required="true"></uses-library>
--->
 		<activity android:label="@string/app_name" android:name="EntryPointActivity">
 		    <intent-filter>
 			    <action android:name="android.intent.action.MAIN" />
@@ -26,20 +17,14 @@ UNCOMMENT TO ENABLE GOOGLE MAPS
         <activity android:label="@string/verblist_activity_name" android:name="VerbListActivity">
         </activity>
 
-	</application>
+        <activity android:label="@string/settings_activity_name" android:name="SettingsActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.PREFERENCE"/>
+            </intent-filter>
+        </activity>
 
-<!-- 
-===================================
-PERMISSION REQUIRED FOR GOOGLE MAPS
-===================================
--->
-<!-- 
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-	<uses-permission android:name="android.permission.GET_ACCOUNTS" />
-	<uses-permission android:name="android.permission.INTERNET" />
- -->
+	</application>
+    
 	<uses-sdk android:minSdkVersion="8"
               android:targetSdkVersion="8"/>
 </manifest>

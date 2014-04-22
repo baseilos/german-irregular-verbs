@@ -10,6 +10,7 @@
     <string name="helpbtn_label">Help</string>
     <string name="mainmenu_about_label">About</string>
     <string name="mainmenu_verbslist">Verbs</string>
+    <string name="mainmenu_settings">Settings</string>
     <string name="about_closeBtn_label">Close</string>
     <string name="about_header">About</string>
     <string name="hint_auxverb">Aux</string>
@@ -31,5 +32,11 @@
     <!-- FontAwesome -->
     <string name="fontawesome_circle">&#xf05d;</string>
     <string name="fontawesome_cross">&#xf05c;</string>
+
+    <!-- Preferences -->
+    <string name="settings_activity_name">Preferences</string>
+    <string name="pref_generateVerbType_title">Verb forms</string>
+    <string name="pref_generateVerbType_defaultValue">BOTH</string>
+    <string name="pref_generateVerbType_summary">Select verb forms you want to practice</string>
 
 </resources>

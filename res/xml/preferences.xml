@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+            android:key="pref_generateVerbForm"
+            android:title="@string/pref_generateVerbType_title"
+            android:entries="@array/pref_generateVerbType_entries"
+            android:entryValues="@array/pref_generateVerbType_entryValues"
+            android:defaultValue="@string/pref_generateVerbType_defaultValue"
+            android:summary="@string/pref_generateVerbType_summary"/>
+</PreferenceScreen>

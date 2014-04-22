@@ -1,10 +1,14 @@
 package com.jozeflang.android.germanirregularverbs.main;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.db.VerbProvider;
 import com.jozeflang.android.germanirregularverbs.main.data.Question;
+import com.jozeflang.android.germanirregularverbs.validator.AnswerType;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -20,12 +24,14 @@ public class GermanIrregularVerbsApplication extends Application {
     private Typeface fontAwesome;
 	private VerbProvider verbProvider;
 	private Question activeQuestion;
+    private SharedPreferences preferences;
 	
 	@Override
 	public void onCreate() {
 		super.onCreate();
         fontAwesome = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
 		verbProvider = new VerbProvider(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 	}
 
 	@Override
@@ -44,7 +50,7 @@ public class GermanIrregularVerbsApplication extends Application {
 	public Question getQuestion(boolean newQuestion) {
 		if (newQuestion) {
 			logger.info(String.format("Generating new question"));
-			activeQuestion = verbProvider.getQuestion();
+			activeQuestion = getNextQuestion();
 		}
 		return activeQuestion;
 	}
@@ -77,5 +83,14 @@ public class GermanIrregularVerbsApplication extends Application {
 
     public Typeface getFontAwesome() {
         return fontAwesome;
+    }
+
+    private Question getNextQuestion() {
+        String verbFrom = preferences.getString("pref_generateVerbForm", "BOTH");
+        if (TextUtils.equals("BOTH", verbFrom)) {
+            return verbProvider.getQuestion();
+        } else {
+            return verbProvider.getQuestion(AnswerType.valueOf(verbFrom));
+        }
     }
 }

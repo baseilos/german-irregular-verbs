@@ -6,6 +6,9 @@
     <item android:id="@+id/mainmenu_verbList"
           android:title="@string/mainmenu_verbslist" />
 
+    <item android:id="@+id/mainmenu_settings"
+          android:title="@string/mainmenu_settings" />
+
 	<item android:id="@+id/mainmenu_about"
           android:title="@string/mainmenu_about_label" />
     
