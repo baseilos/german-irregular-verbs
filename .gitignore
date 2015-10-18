@@ -25,3 +25,4 @@ local.properties
 
 # Gradle
 .gradle
+gradle.properties
