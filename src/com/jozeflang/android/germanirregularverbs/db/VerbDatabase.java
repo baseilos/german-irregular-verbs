@@ -1,9 +1,7 @@
 package com.jozeflang.android.germanirregularverbs.db;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -12,6 +10,7 @@ import com.jozeflang.android.germanirregularverbs.db.table.PerfectTable;
 import com.jozeflang.android.germanirregularverbs.db.table.PreteriteTable;
 import com.jozeflang.android.germanirregularverbs.db.table.TranslationTable;
 import com.jozeflang.android.germanirregularverbs.db.table.VerbTable;
+import com.jozeflang.android.germanirregularverbs.util.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,7 +62,7 @@ enum VerbDatabase {
 	public long getVerbCount(boolean onlyActive) {
         String onlyActiveCondition = null;
         if (onlyActive) {
-            onlyActiveCondition = String.format("%s = 1", VerbTable.COLUMN_ACTIVE);
+            onlyActiveCondition = Utils.format("%s = 1", VerbTable.COLUMN_ACTIVE);
         }
         Cursor c = getHandler().query(VerbTable.TABLE_NAME, new String[] {"count(1)"}, onlyActiveCondition, null, null, null, null);
         long verbCount = -1;
@@ -113,16 +112,16 @@ enum VerbDatabase {
     }
 
     public int updateVerb(VerbDTO verb) {
-        String whereCondition = String.format("%s = %d", VerbTable.COLUMN_ID, verb.getId());
+        String whereCondition = Utils.format("%s = %d", VerbTable.COLUMN_ID, verb.getId());
         return getHandler(false).update(VerbTable.TABLE_NAME, VerbTable.createContentValues(verb), whereCondition, null);
     }
 
     public void setVerbsActivness(boolean isActive) {
-        getHandler(false).execSQL(String.format("UPDATE %s SET %s=%d", VerbTable.TABLE_NAME, VerbTable.COLUMN_ACTIVE, isActive ? 1 : 0));
+        getHandler(false).execSQL(Utils.format("UPDATE %s SET %s=%d", VerbTable.TABLE_NAME, VerbTable.COLUMN_ACTIVE, isActive ? 1 : 0));
     }
 
     public void invertVerbActivness() {
-        getHandler(false).execSQL(String.format("UPDATE %s SET %s=CASE WHEN %s = 0 THEN 1 ELSE 0 END", VerbTable.TABLE_NAME, VerbTable.COLUMN_ACTIVE, VerbTable.COLUMN_ACTIVE));
+        getHandler(false).execSQL(Utils.format("UPDATE %s SET %s=CASE WHEN %s = 0 THEN 1 ELSE 0 END", VerbTable.TABLE_NAME, VerbTable.COLUMN_ACTIVE, VerbTable.COLUMN_ACTIVE));
     }
 
 
@@ -130,11 +129,11 @@ enum VerbDatabase {
         List<VerbDTO> verbList = new ArrayList<VerbDTO>();
         String onlyActiveCondition = null;
         if (onlyActive) {
-            onlyActiveCondition = String.format("%s = %d", VerbTable.COLUMN_ACTIVE, onlyActive ? 1 : 0);
+            onlyActiveCondition = Utils.format("%s = %d", VerbTable.COLUMN_ACTIVE, onlyActive ? 1 : 0);
         }
         String filterCondition = null;
         if (filter != null && !TextUtils.isEmpty(filter)) {
-            filterCondition = String.format("%s LIKE '%s%%'", VerbTable.COLUMN_PRESENT, filter);
+            filterCondition = Utils.format("%s LIKE '%s%%'", VerbTable.COLUMN_PRESENT, filter);
         }
 
         // Construct condition
@@ -181,7 +180,7 @@ enum VerbDatabase {
      * @return
      */
     private int getNthVerbIdFromDb(final int n, boolean activeOnly) {
-        String limitStr = String.format("%d,1", n);
+        String limitStr = Utils.format("%d,1", n);
         Cursor c = null;
         if (activeOnly) {
             c = getHandler().query(VerbTable.TABLE_NAME, new String[] {VerbTable.COLUMN_ID}, VerbTable.COLUMN_ACTIVE + " = 1", null, null, null, null, limitStr);
@@ -297,7 +296,7 @@ enum VerbDatabase {
 		
 		private void dropTables(SQLiteDatabase db) {
 			for (String tableName : Arrays.asList(VerbTable.TABLE_NAME, PreteriteTable.TABLE_NAME, PerfectTable.TABLE_NAME, TranslationTable.TABLE_NAME))
-				db.execSQL(String.format("DROP TABLE IF EXISTS " + tableName));
+				db.execSQL(Utils.format("DROP TABLE IF EXISTS " + tableName));
 		}
 		
 		private void importScript(SQLiteDatabase db) {

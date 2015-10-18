@@ -1,16 +1,12 @@
 package com.jozeflang.android.germanirregularverbs.util;
 
-import android.graphics.Typeface;
 import android.text.TextUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 
 /** 
@@ -136,5 +132,17 @@ public class Utils {
             sb.append(e.toString());
         }
         return sb.toString();
+    }
+
+    /**
+     * Wraps {@link String#format(Locale, String, Object...)} in order to use {@link Locale#US} locale by default for
+     * formatting strings.
+     *
+     * @param format
+     * @param args
+     * @return
+     */
+    public static String format(String format, Object... args) {
+        return String.format(Locale.US, format, args);
     }
 }
