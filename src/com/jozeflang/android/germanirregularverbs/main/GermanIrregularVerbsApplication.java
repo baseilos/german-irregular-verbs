@@ -36,6 +36,7 @@ public class GermanIrregularVerbsApplication extends Application {
 
 	@Override
 	public void onTerminate() {
+        super.onTerminate();
 		verbProvider.closeProvider();
 	}
 	

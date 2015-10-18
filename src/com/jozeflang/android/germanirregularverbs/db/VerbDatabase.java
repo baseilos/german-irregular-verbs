@@ -71,6 +71,7 @@ enum VerbDatabase {
             verbCount = c.getLong(0);
             c.moveToNext();
         }
+        c.close();
         if (verbCount == -1) {
             // Something went wrong, -1 is not a valid verb count
             throw new IllegalStateException("Illegal verb count: " + verbCount);

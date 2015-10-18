@@ -46,7 +46,7 @@ public class VerbListActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         try {
-            inflater.inflate(R.layout.verblist_menu, menu);
+            inflater.inflate(R.menu.verblist_menu, menu);
         } catch (InflateException e) {
             return false;
         }

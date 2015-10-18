@@ -3,16 +3,11 @@ package com.jozeflang.android.germanirregularverbs.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.InflateException;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO.Perfect;
 import com.jozeflang.android.germanirregularverbs.main.data.Answer;
 import com.jozeflang.android.germanirregularverbs.main.data.Question;
@@ -48,7 +43,7 @@ public class EntryPointActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		try {
-			inflater.inflate(R.layout.main_menu, menu);
+			inflater.inflate(R.menu.main_menu, menu);
 		} catch (InflateException e) {
 			return false;
 		}
