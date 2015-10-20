@@ -9,10 +9,18 @@ import android.preference.PreferenceActivity;
  */
 public class SettingsActivity extends PreferenceActivity {
 
+    private GermanIrregularVerbsApplication application;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        application = (GermanIrregularVerbsApplication) getApplication();
         addPreferencesFromResource(R.xml.preferences);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        application.sendAnalyticsHit(SettingsActivity.class.getSimpleName());
+    }
 }

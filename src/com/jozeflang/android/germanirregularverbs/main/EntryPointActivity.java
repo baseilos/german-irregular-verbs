@@ -37,6 +37,7 @@ public class EntryPointActivity extends Activity {
     protected void onResume() {
         super.onResume();
         initActivity(null);
+		application.sendAnalyticsHit(EntryPointActivity.class.getSimpleName());
     }
 
     @Override

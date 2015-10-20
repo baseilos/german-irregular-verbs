@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 import com.jozeflang.android.germanirregularverbs.db.VerbDTO;
 import com.jozeflang.android.germanirregularverbs.db.VerbProvider;
 import com.jozeflang.android.germanirregularverbs.main.data.Question;
@@ -21,6 +24,7 @@ public class GermanIrregularVerbsApplication extends Application {
 
 	private final Logger logger = Logger.getLogger(GermanIrregularVerbsApplication.class.getName());
 
+    private Tracker analyticsTracker;
     private Typeface fontAwesome;
 	private VerbProvider verbProvider;
 	private Question activeQuestion;
@@ -84,6 +88,21 @@ public class GermanIrregularVerbsApplication extends Application {
 
     public Typeface getFontAwesome() {
         return fontAwesome;
+    }
+
+    public void sendAnalyticsHit(String screenName) {
+        HitBuilders.ScreenViewBuilder builder = new HitBuilders.ScreenViewBuilder();
+        // https://developers.google.com/analytics/devguides/collection/protocol/v1/parameters
+        builder.set("&cd", screenName);
+        getDefaultTracker().send(builder.build());
+    }
+
+    synchronized private Tracker getDefaultTracker() {
+        if (analyticsTracker == null) {
+            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+            analyticsTracker = analytics.newTracker("UA-68998946-1");
+        }
+        return analyticsTracker;
     }
 
     private Question getNextQuestion() {

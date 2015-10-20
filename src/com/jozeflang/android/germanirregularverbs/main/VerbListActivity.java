@@ -40,6 +40,7 @@ public class VerbListActivity extends Activity {
     protected void onResume() {
         super.onResume();
         new LoadVerbsAsyncTask(this, verbTable).execute(getFilterString());
+        application.sendAnalyticsHit(VerbListActivity.class.getSimpleName());
     }
 
     @Override
